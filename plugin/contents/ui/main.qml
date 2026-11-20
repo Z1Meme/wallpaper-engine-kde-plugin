@@ -89,7 +89,11 @@ Rectangle {
 
     property int    displayMode: get_opt_value('display_mode', wallpaper.configuration.DisplayMode)
     property string backgroundColor: get_opt_value('background_color', wallpaper.configuration.BackgroundColor)
-    property bool   mute: get_opt_value('mute_audio', wallpaper.configuration.MuteAudio)
+    // Wallpaper audio is disabled outright on this build: every backend (mpv, scene, QtMultimedia,
+    // web) binds its mute to this property, so pinning it here keeps the MuteAudio setting, the
+    // per-wallpaper mute_audio option, D-Bus Unmute/ToggleMute and the toggle_mute shortcut from
+    // ever turning sound on.
+    readonly property bool mute: true
     property int    volume: get_opt_value('volume', wallpaper.configuration.Volume)
     property real   speed: get_opt_value('speed', wallpaper.configuration.Speed)
     // User properties for scene wallpapers (JSON string format)

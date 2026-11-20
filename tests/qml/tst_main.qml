@@ -108,6 +108,20 @@ TestCase {
         verify(curOptSpy.count >= 1);
     }
 
+    // Wallpaper audio is disabled outright on this build (main.qml's `mute` is a readonly true):
+    // neither a per-wallpaper mute_audio override nor a direct write may unmute it.
+    function test_mute_isPinnedOn() {
+        const bg = _findBackground();
+        if (!bg) return;
+        compare(bg.mute, true);
+        bg.curOpt = { mute_audio: false, volume: 100 };
+        compare(bg.mute, true);
+        let threw = false;
+        try { bg.mute = false; } catch (e) { threw = true; }
+        verify(threw);
+        compare(bg.mute, true);
+    }
+
     function test_perOptChanged_handlerFires() {
         const bg = _requireBg();
         perOptSpy.target = bg;

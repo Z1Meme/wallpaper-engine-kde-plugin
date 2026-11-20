@@ -620,6 +620,10 @@ MpvObject::MpvObject(QQuickItem* parent)
     // Wallpapers have no audio path on the QML side — skip the decode
     // entirely.  Saves a few %CPU on AAC-tracked files.
     mpv_set_option_string(m_mpv, "audio", "no");
+    // Wallpaper audio is disabled outright on this build.  `audio` is only an alias of `aid`,
+    // which an unmute would set back to "auto"; a null output keeps mpv from ever reaching a
+    // sound server even then.
+    mpv_set_option_string(m_mpv, "ao", "null");
 
     // 1080p30 wallpapers need ~2 decode threads; mpv default (= CPU core
     // count) is wasteful and spawns idle threads on modern desktops.

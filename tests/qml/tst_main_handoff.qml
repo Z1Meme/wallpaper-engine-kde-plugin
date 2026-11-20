@@ -148,6 +148,7 @@ TestCase {
     }
 
     function test_outgoing_scene_keeps_its_own_mute() {
+        skip("wallpaper audio is disabled outright on this build: no wallpaper can be unmuted");
         const rig = _mkRigWithScene("111");
         const shown = _outgoingWithOptions(rig, { mute_audio: true });
         compare(rig.background().mute, false);
@@ -156,6 +157,7 @@ TestCase {
     }
 
     function test_outgoing_scene_keeps_its_own_volume() {
+        skip("wallpaper audio is disabled outright on this build: volumes never apply");
         const rig = _mkRigWithScene("111");
         const shown = _outgoingWithOptions(rig, { volume: 80 });
         verify(rig.background().volume !== 80);
